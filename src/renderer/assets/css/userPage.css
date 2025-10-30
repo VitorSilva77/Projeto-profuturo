@@ -1,0 +1,495 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+body {
+  background: #f5f6fa;
+  color: #333;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: rgb(34, 34, 34);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-section > img {
+    width: 70px;
+    height: auto;
+    margin: none;
+}
+
+.logo-section {
+    margin: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    text-align: center;
+}
+
+.itens {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.item a{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.item:hover {
+    background: rgb(255, 71, 20);
+}
+
+.item i {
+    width: 20px;
+    text-align: center;
+}
+
+
+.logout-button {
+    margin-top: auto;
+    color: white;
+    background:rgb(34, 34, 34);;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.logout-button i {
+    width: 20px;
+    text-align: center;
+}
+
+.logout-button:hover {
+    background: rgb(255, 71, 20);
+}
+
+.logo {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: rgb(255, 71, 20);
+}
+
+.btn-login {
+    color: rgb(255, 71, 20);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* Área principal */
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.section-title{
+    margin-top: 40px;
+    color: black;
+}
+
+.registration {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.registration form {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.registration input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex: 1;
+}
+
+.registration select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex: 1;
+    background: white;
+    color: #333;
+}
+
+.registration button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Cards */
+.courses {
+    margin-bottom: 20px;
+}
+.course-card {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.course-card:hover {
+    transform: scale(1.02);
+}
+
+.course-card.selected {
+    transform: scale(1.05);
+    background-color: #4a90e2;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.course-card.selected h3,
+.course-card.selected p {
+    color: white;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 180px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Gráficos */
+.chart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.charts{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-box {
+    height: 100%;
+    width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+/* Estilos para informações do usuário */
+.user-info {
+    background: rgba(255, 102, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-name {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.user-type {
+    display: block;
+    font-size: 12px;
+    color: rgb(255, 102, 0);
+}
+
+/* Estilos para seções dinâmicas */
+.welcome {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.welcome h3 {
+    color: rgb(255, 102, 0);
+    margin-bottom: 10px;
+}
+
+.permissions-info {
+    margin-top: 15px;
+}
+
+.permissions-info h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.permissions-info ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.permissions-info li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.permissions-info li:before {
+    content: "✓ ";
+    color: rgb(255, 102, 0);
+    font-weight: bold;
+}
+
+/* Estilos para o mural */
+.board {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.post-form {
+    margin-bottom: 20px;
+}
+
+.post-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 10px;
+}
+
+.post-form button {
+    background: rgb(255, 102, 0);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.posts {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.post {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.post h4 {
+    color: rgb(255, 102, 0);
+    margin-bottom: 10px;
+}
+
+.post small {
+    color: #666;
+}
+
+/* Estilos para chamados */
+.tickets {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.ticket-form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ticket-form input,
+.ticket-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.ticket-form button {
+    background: rgb(255, 102, 0);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.tickets-list {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.ticket-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-item h5 {
+    color: rgb(255, 102, 0);
+    margin-bottom: 5px;
+}
+
+.ticket-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ticket-status.open {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.resolve-ticket {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Estilos para relatórios */
+.reports {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.reports .chart-box {
+    margin-bottom: 15px;
+}
+
+.reports .chart-box h4 {
+    color: rgb(255, 102, 0);
+    margin-bottom: 10px;
+}
+
+/* Estilos para mensagens */
+#registration-message {
+    margin-top: 10px;
+}
+
+/* Item ativo do menu */
+.item.active {
+    background: rgb(255, 71, 20);
+}
+
+/* Estilos para contadores */
+.students-count {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgb(255, 102, 0);
+    font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+    
+    .course-cards {
+        justify-content: center;
+    }
+    
+    .charts {
+        grid-template-columns: 1fr;
+    }
+    
+    .registration form {
+        flex-direction: column;
+    }
+}
+

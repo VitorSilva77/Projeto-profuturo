@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="./css/fonts.css" rel="stylesheet">
+    <link href="./css/media.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/userPage.css">
+    <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      
+      <!-- Menu lateral -->
+      <aside class="sidebar">
+          <div class="logo-section">
+              <img src="./images/teste1.png" alt="Logo PróFuturo" class="logo-image">
+              <h2 class="logo">PróFuturo</h2>
+          </div>
+          
+          <div class="itens">
+              <a href="#" class="item"><i class="fa-solid fa-house"></i> Início</a>
+              <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
+              <a href="#" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
+              <a href="#" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
+              <a href="#" class="item"><i class="fa-solid fa-gear"></i> Configurações</a>
+              <button class="logout-button">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Sair</span>
+              </button
+          </div>
+      </aside>
+
+      
+      <main class="main">
+        <header class="header">
+          <h2>Dashboard</h2>
+        </header>
+
+        <!-- Seção de registro -->
+        <section class="registration">
+
+          <h2 class="section-title">Registro</h2>
+          
+          <form>
+            <input type="mumber" placeholder="Funcional">
+            <input type="password" placeholder="Senha">
+            <Select>
+              <option value="" disabled selected>Tipo de Usuário</option>
+              <option value="admin">Administrador</option>
+              <option value="instrutor">RH</option>
+              <option value="aluno">Instrutor</option>
+            </Select>
+            <button type="submit">Salvar</button>
+          </form>
+        </section>
+
+        <!-- Gestão de cursos -->
+        <section class="courses">
+            <h2>Meus Cursos</h2>
+            <div class="courses-container">
+              <!-- Os cards dos cursos serão inseridos aqui dinamicamente -->
+            </div>
+        </section>
+
+        <section class="charts">
+            <div class="chart-container">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="progressChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Dashboards -->
+        <section class="chart">
+
+          <h2 class="section-title">Graficos</h2>
+
+          <div class="charts">
+            <div id="chart-box" class="chart-box"></div>
+            <div id="chart-box1" class="chart-box"></div>
+          </div>
+        </section>
+
+        <section class="mural">
+          <h2 class="section-title">Mural de Avisos</h2>
+
+          <div class="form-container">
+              <h2>Criar Novo Aviso</h2>
+              <form id="formNotice">
+                  <label for="typeNotice">Tipo de Aviso:</label>
+                  <select id="typeNotice">
+                      <option value="prova">Prova</option>
+                      <option value="atividade">Atividade</option>
+                      <option value="informacoes">Informações sobre a Aula</option>
+                      <option value="materiais">Materiais de Apoio</option>
+                  </select>
+
+                  <label for="tituloAviso">Título do Aviso:</label>
+                  <input type="text" id="tituloAviso" placeholder="Digite o título do aviso" required>
+
+                  <label for="descricaoAviso">Descrição do Aviso:</label>
+                  <textarea id="descricaoAviso" rows="4" placeholder="Digite a descrição do aviso" required></textarea>
+
+                  <button type="submit">Enviar Aviso</button>
+              </form>
+          </div>
+
+          
+          <div id="avisosList">
+             
+          </div>
+        </section>
+        
+        <section id="area-criacao-cursos" style="display: none;">
+          <h2>Criação de Novos Cursos</h2>
+          
+        </section>
+
+        <section id="area-atribuicao-professores" style="display: none;">
+          <h2>Atribuição de Professores</h2>
+          
+        </section>
+
+      </main>
+    </div>
+  </body>
+  <script src="./js/api.js"></script>
+  <script src="./js/userPage.js"></script>
+  <script src="./js/charts.js"></script>
+</html>
