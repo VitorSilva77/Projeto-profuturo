@@ -3,30 +3,30 @@
 // Espera o conteúdo da página carregar
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
-  const emailInput = document.getElementById('text'); // Seu ID está 'text', não 'email'
+  const funcionalInput = document.getElementById('text'); 
   const passwordInput = document.getElementById('password');
   const errorMessage = document.getElementById('login-error-message');
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Impede o recarregamento da página
 
-    const email = emailInput.value;
+    const funcional = funcionalInput.value;
     const password = passwordInput.value;
 
-    if (!email || !password) {
+    if (!funcional || !password) {
       showError('Por favor, preencha todos os campos.');
       return;
     }
 
     try {
       // Chama a função 'login' do preload.js (via api.js)
-      const response = await api.login({ email, password });
+      const response = await api.login({ funcional, password });
 
       if (response.success) {
         // SUCESSO!
         console.log('Login bem-sucedido:', response.user);
         // Redireciona para a página principal
-        window.location.href = 'userPage.html';
+        window.location.href = '../views/userPage.html';
       } else {
         // FALHA
         showError(response.error || 'Credenciais inválidas.');

@@ -21,6 +21,25 @@ async function findByEmail(email) {
 }
 
 /**
+ * (NOVA FUNÇÃO)
+ * Busca um usuário pelo código funcional, incluindo sua role.
+ */
+async function findByFuncional(funcional) {
+  return getDb()('usuarios')
+    .join('roles', 'usuarios.role_id', '=', 'roles.id')
+    .where('usuarios.funcional', funcional) // <- A MUDANÇA É AQUI
+    .select(
+      'usuarios.id',
+      'usuarios.nome',
+      'usuarios.email',
+      'usuarios.password_hash',
+      'usuarios.is_active',
+      'roles.nome as role_name'
+    )
+    .first();
+}
+
+/**
  * Cria um novo usuário.
  */
 async function create(userData) {
@@ -33,5 +52,6 @@ async function create(userData) {
 
 module.exports = {
   findByEmail,
-  create
+  create,
+  findByFuncional // <- ADICIONADO A EXPORTAÇÃO
 };

@@ -1,21 +1,34 @@
+// src/main/index.js (Corrigido)
+
 require('dotenv').config();
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
-// 2. Importar conexão e controllers
+// 2. Importar conexão e TODOS os controllers
 const dbConnection = require('./database/connection');
 const authController = require('./controllers/authController');
 const courseController = require('./controllers/courseController');
 const userController = require('./controllers/userController'); 
+// ADICIONADO: Importar o reportController
+const reportController = require('./controllers/reportController'); 
 
-
-
+// 3. Registra todos os Handlers da "API" (FUNÇÃO ÚNICA)
 function registerIpcHandlers() {
-  
+  // Autenticação
+  ipcMain.handle('auth:login', authController.handleLogin);
+  ipcMain.handle('auth:logout', authController.handleLogout);
+  ipcMain.handle('auth:get-session', authController.handleGetSession);
+
+  // Cursos
+  ipcMain.handle('courses:get-all', courseController.handleGetAllCourses);
+  ipcMain.handle('courses:create', courseController.handleCreateCourse);
+
+  // Usuários (Estava faltando)
   ipcMain.handle('users:create', userController.handleCreateUser);
+
+  // Relatórios (Estava faltando)
   ipcMain.handle('reports:course-performance', reportController.handleGetCoursePerformance);
-  // ... registre todos os outros ...
 }
 
 function createWindow() {
@@ -27,25 +40,12 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false
     }
-  
   });
-  mainWindow.loadFile('../renderer/index.html');
+
+  // CORREÇÃO: Apontar para o arquivo HTML dentro de /views
+  mainWindow.loadFile(path.join(__dirname, '../renderer/views/index.html'));
   
   mainWindow.webContents.openDevTools();
-}
-
-// 3. Registra todos os Handlers da "API"
-function registerIpcHandlers() {
-  // Autenticação
-  ipcMain.handle('auth:login', authController.handleLogin);
-  ipcMain.handle('auth:logout', authController.handleLogout);
-  ipcMain.handle('auth:get-session', authController.handleGetSession);
-
-  // Cursos
-  ipcMain.handle('courses:get-all', courseController.handleGetAllCourses);
-  ipcMain.handle('courses:create', courseController.handleCreateCourse);
-  
-  // ... registre todos os outros ...
 }
 
 // 4. Ciclo de vida da aplicação

@@ -7,7 +7,7 @@ const authService = require('../services/authService');
 
 async function handleLogin(event, payload) {
   try {
-    const user = await authService.login(payload.email, payload.password);
+    const user = await authService.login(payload.funcional, payload.password);
     return { success: true, user };
   } catch (error) {
     console.error(error.message);
