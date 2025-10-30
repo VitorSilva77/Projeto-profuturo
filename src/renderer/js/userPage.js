@@ -173,13 +173,39 @@ async function loadInitialData() {
 // --- Handlers de Formulário ---
 
 async function handleRegistrationSubmit(e) {
-  e.preventDefault();
-  // Lógica para pegar os dados do form de registro e chamar api.createUser(...)
-  alert('Funcionalidade de Registro ainda não implementada.');
-}
+ e.preventDefault();
+  const form = e.target;
+  const button = form.querySelector('button[type="submit"]');
+  
+  // Pegar dados pelos IDs que definimos no HTML
+  const nome = document.getElementById('regNome').value;
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+  const roleName = document.getElementById('regRole').value;
 
-async function handleNoticeSubmit(e) {
-  e.preventDefault();
-  // Lógica para pegar os dados do form de aviso e chamar api.createNotice(...)
-  alert('Funcionalidade de Aviso ainda não implementada.');
+  if (!nome || !email || !password || !roleName) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+  }
+  
+  button.disabled = true;
+  button.textContent = 'Salvando...';
+
+  try {
+    const response = await api.createUser({ nome, email, password, roleName });
+
+    if (response.success) {
+      alert('Usuário criado com sucesso!');
+      form.reset(); // Limpa o formulário
+    } else {
+      // Mostra o erro vindo do backend (ex: "Email já em uso")
+      alert(`Erro ao salvar: ${response.error}`);
+    }
+  } catch (err) {
+    console.error('Erro ao registrar:', err);
+    alert('Erro de comunicação ao registrar usuário.');
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Salvar';
+  }
 }

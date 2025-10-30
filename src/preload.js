@@ -64,7 +64,7 @@ const api = {
    */
   
   // getAllUsers: () => ipcRenderer.invoke('users:get-all'),
-  // createUser: (userData) => ipcRenderer.invoke('users:create', userData),
+  createUser: (userData) => ipcRenderer.invoke('users:create', userData),
 
   /**
    * -----------------------------------------------------------------
@@ -72,7 +72,7 @@ const api = {
    * -----------------------------------------------------------------
    */
   
-  // getEnrollmentReport: () => ipcRenderer.invoke('reports:enrollment'),
+  getCoursePerformanceReport: () => ipcRenderer.invoke('reports:course-performance'), 
 
   /**
    * -----------------------------------------------------------------
@@ -90,4 +90,5 @@ const api = {
 try {
   contextBridge.exposeInMainWorld(apiKey, api);
 } catch (error) {
-  console.error('Falha ao expor a API do preload:',
+  console.error('Falha ao expor a API do preload:', error);
+}

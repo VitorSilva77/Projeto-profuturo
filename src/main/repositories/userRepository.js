@@ -24,11 +24,9 @@ async function findByEmail(email) {
  * Cria um novo usuário.
  */
 async function create(userData) {
-  // .returning() funciona bem no PostgreSQL
-  const [newUser] = await getDb()('usuarios')
-    .insert(userData)
-    .returning('*'); 
-  return newUser;
+
+  const [newUserId] = await getDb()('usuarios').insert(userData);
+  return getDb()('usuarios').where('id', newUserId).first();
 }
 
 // ... adicione outras funções (findById, findAll, update, delete) conforme necessário

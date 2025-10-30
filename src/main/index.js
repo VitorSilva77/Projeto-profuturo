@@ -1,6 +1,3 @@
-// src/main/index.js
-
-// 1. Carregar variáveis de ambiente (DEVE SER A PRIMEIRA COISA)
 require('dotenv').config();
 
 const { app, BrowserWindow, ipcMain } = require('electron');
@@ -10,30 +7,30 @@ const path = require('path');
 const dbConnection = require('./database/connection');
 const authController = require('./controllers/authController');
 const courseController = require('./controllers/courseController');
-// ... importe outros controllers (user, report, etc.)
+const userController = require('./controllers/userController'); 
+
+
+
+function registerIpcHandlers() {
+  
+  ipcMain.handle('users:create', userController.handleCreateUser);
+  ipcMain.handle('reports:course-performance', reportController.handleGetCoursePerformance);
+  // ... registre todos os outros ...
+}
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      // Aponta para o preload que iremos criar depois
       preload: path.join(__dirname, '../preload.js'),
       contextIsolation: true,
       nodeIntegration: false
     }
+  
   });
-
-  // Em desenvolvimento, carregue de um servidor local (ex: Vite/React)
-  // mainWindow.loadURL('http://localhost:5173'); 
+  mainWindow.loadFile('../renderer/index.html');
   
-  // Em produção, carregue o HTML
-  // mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
-
-  // Apenas para exemplo, vamos carregar o index.html
-  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
-  
-  // Abrir DevTools (opcional)
   mainWindow.webContents.openDevTools();
 }
 

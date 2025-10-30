@@ -1,8 +1,3 @@
-// Exemplo em src/renderer/renderer.js (ou um componente de Login)
-
-// Não precisa de 'require' ou 'import'.
-// O 'window.api' foi injetado pelo preload.js!
-
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');

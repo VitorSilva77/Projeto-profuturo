@@ -10,7 +10,7 @@ function init() {
   
   console.log('Inicializando conexão com o banco de dados...');
   dbInstance = knex({
-    client: 'pg', // Mude para 'mysql2', 'mssql', etc.
+    client: 'mysql2', 
     connection: {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,

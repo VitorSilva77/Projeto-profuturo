@@ -3,20 +3,20 @@ CREATE DATABASE IF NOT EXISTS pro_futuro_schema;
 USE pro_futuro_schema;
 
 CREATE TABLE roles (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE, -- 'TI', 'RH', 'Professor', 'Aluno'
     descricao TEXT
 );
 
 CREATE TABLE usuarios (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL, -- NUNCA armazene senhas em texto puro
+    password_hash VARCHAR(255) NOT NULL,
     role_id INT NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
@@ -25,15 +25,14 @@ CREATE TABLE usuarios (
 CREATE INDEX idx_usuarios_email ON usuarios(email);
 
 CREATE TABLE cursos (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descricao TEXT,
     carga_horaria INT, -- Em horas
     professor_id INT, -- O professor responsável
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    -- Um curso é ligado a um usuário que DEVE ter o role 'Professor'
     FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
@@ -41,7 +40,7 @@ CREATE TABLE cursos (
 CREATE INDEX idx_cursos_professor_id ON cursos(professor_id);
 
 CREATE TABLE matriculas (
-    id SERIAL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
     curso_id INT NOT NULL,
     data_matricula DATE DEFAULT CURRENT_TIMESTAMP,
@@ -60,12 +59,12 @@ CREATE INDEX idx_matriculas_aluno_id ON matriculas(aluno_id);
 CREATE INDEX idx_matriculas_curso_id ON matriculas(curso_id);
 
 CREATE TABLE logs_auditoria (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL, -- Quem fez a ação
     acao VARCHAR(100) NOT NULL, -- Ex: 'LOGIN', 'CREATE_USER', 'DELETE_COURSE'
     target_type VARCHAR(100), -- Ex: 'Usuario', 'Curso'
     target_id INT, -- ID da entidade afetada (ex: o id do curso deletado)
-    detalhes JSON, -- (Opcional) Para guardar o que mudou
+    detalhes JSON,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)

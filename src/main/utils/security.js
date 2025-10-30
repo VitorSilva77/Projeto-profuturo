@@ -1,6 +1,6 @@
 // src/main/utils/security.js
 
-const bcrypt = require('bcrypt.js');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 /**

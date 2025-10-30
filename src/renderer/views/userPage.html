@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com 'unsafe-inline' 'unsafe-eval'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="./css/fonts.css" rel="stylesheet">
-    <link href="./css/media.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/userPage.css">
+    <link rel="stylesheet" href="../assets/css/fonts.css">
+    <link rel="stylesheet" href="../assets/css/media.css">
+    <link rel="stylesheet" href="../assets/css/userPage.css">
     <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
@@ -46,15 +46,17 @@
 
           <h2 class="section-title">Registro</h2>
           
-          <form>
-            <input type="mumber" placeholder="Funcional">
-            <input type="password" placeholder="Senha">
-            <Select>
+          <form id="registration-form">
+            <input type="text" id="regNome" placeholder="Nome Completo" required>
+            <input type="email" id="regEmail" placeholder="Email (Funcional)" required>
+            <input type="password" id="regPassword" placeholder="Senha" required>
+            <select id="regRole" required>
               <option value="" disabled selected>Tipo de Usuário</option>
-              <option value="admin">Administrador</option>
-              <option value="instrutor">RH</option>
-              <option value="aluno">Instrutor</option>
-            </Select>
+              <option value="TI">Administrador (TI)</option>
+              <option value="RH">Recursos Humanos (RH)</option>
+              <option value="Professor">Instrutor (Professor)</option>
+              <option value="Aluno">Aluno</option>
+            </select>
             <button type="submit">Salvar</button>
           </form>
         </section>
