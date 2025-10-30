@@ -44,6 +44,7 @@ const api = {
    * @returns {Promise<{success: boolean, data?: object[], error?: string}>}
    */
   getAllCourses: () => ipcRenderer.invoke('courses:get-all'),
+  getCoursesByProfessor: (professorId) => ipcRenderer.invoke('courses:getByProfessor', professorId),
 
   /**
    * Cria um novo curso.

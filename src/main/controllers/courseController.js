@@ -20,9 +20,18 @@ async function handleCreateCourse(event, courseData) {
   }
 }
 
-// ... outros handlers (update, delete)
+const getCoursesByProfessor = async (event, professorId) => {
+  try {
+    const courses = await courseService.findCoursesByProfessor(professorId);
+    return { success: true, data: courses };
+  } catch (error) {
+    console.error('Erro ao buscar cursos por professor:', error);
+    return { success: false, error: error.message };
+  }
+};
 
 module.exports = {
   handleGetAllCourses,
-  handleCreateCourse
+  handleCreateCourse,
+  getCoursesByProfessor
 };

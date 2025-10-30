@@ -22,6 +22,7 @@ function registerIpcHandlers() {
 
   // Cursos
   ipcMain.handle('courses:get-all', courseController.handleGetAllCourses);
+  ipcMain.handle('courses:getByProfessor', courseController.getCoursesByProfessor);
   ipcMain.handle('courses:create', courseController.handleCreateCourse);
 
   // Usuários (Estava faltando)

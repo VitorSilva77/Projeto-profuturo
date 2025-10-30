@@ -12,10 +12,15 @@ async function create(courseData) {
 async function findAll() {
   return getDb()('cursos').select('*');
 }
-
-// ... adicione outras funções (findById, update, delete) conforme necessário
+  
+async function findByProfessorId(professorId) {
+  return getDb()('cursos')
+    .where('professor_id', professorId)
+    .select('*');
+}
 
 module.exports = {
   create,
-  findAll
+  findAll,
+  findByProfessorId
 };

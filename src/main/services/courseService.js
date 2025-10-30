@@ -1,5 +1,3 @@
-// src/main/services/courseService.js
-
 const courseRepository = require('../repositories/courseRepository'); // Agora este arquivo existe!
 const auditService = require('./auditService');
 const { getCurrentUser } = require('./authService');
@@ -7,7 +5,6 @@ const { checkRole } = require('../utils/security');
 const { ROLES } = require('../utils/constants');
 
 async function getAllCourses() {
-  // Busca dados REAIS do banco
   return courseRepository.findAll();
 }
 
@@ -33,9 +30,15 @@ async function createCourse(courseData) {
   return newCourse;
 }
 
-// ... outros métodos (update, delete) com checagem de role e auditoria
+async function findCoursesByProfessor(professorId) {
+    if (!professorId) {
+      throw new Error('ID do professor é obrigatório.');
+    }
+    return courseRepository.findByProfessorId(professorId);
+}
 
 module.exports = {
   getAllCourses,
-  createCourse
+  createCourse,
+  findCoursesByProfessor
 };

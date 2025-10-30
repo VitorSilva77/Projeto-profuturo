@@ -1,6 +1,3 @@
-// src/renderer/js/userPage.js
-
-// Variável global para armazenar os dados do usuário logado
 let currentUser = null;
 
 /**
@@ -9,15 +6,12 @@ let currentUser = null;
  */
 (async () => {
   try {
-    const response = await api.getSession(); // Checa se já existe uma sessão no backend
+    const response = await api.getSession(); 
 
     if (response.success && response.user) {
-      // Usuário está logado
       currentUser = response.user;
-      // Agora que sabemos quem é o usuário, podemos inicializar a página
       initializeApp(currentUser);
     } else {
-      // Usuário NÃO está logado
       console.warn('Nenhuma sessão encontrada. Redirecionando para o login.');
       window.location.href = 'index.html';
     }
@@ -36,18 +30,24 @@ function initializeApp(user) {
   document.addEventListener('DOMContentLoaded', () => {
     console.log(`Usuário logado: ${user.nome} (Role: ${user.role})`);
     
-    // Anexa os eventos principais
     attachGlobalListeners();
-    
-    // Renderiza informações dinâmicas
     renderUserInfo(user);
-    
-    // Aplica o Controle de Acesso Baseado em Role (RBAC)
     applyRBAC(user.role);
     
-    // Carrega dados iniciais (cursos, avisos, etc.)
-    loadInitialData();
+    // Inicia o carregamento de todo o conteúdo dinâmico da página
+    loadPageContent();
   });
+}
+
+/**
+ * 3. ORQUESTRADOR DE CONTEÚDO
+ * Chama as funções para carregar as diferentes partes da página.
+ */
+async function loadPageContent() {
+  // Primeiro, carrega os cards dos cursos e configura os eventos de clique
+  await loadCourseCards();
+  // Em seguida, carrega os dados do dashboard (gráficos, etc.) para "Todos os Cursos"
+  await loadDashboardData();
 }
 
 function attachGlobalListeners() {
@@ -78,7 +78,6 @@ function attachGlobalListeners() {
 }
 
 function renderUserInfo(user) {
-  // Atualiza o header com o nome do usuário
   const headerTitle = document.querySelector('.header h2');
   if (headerTitle) {
     headerTitle.textContent = `Dashboard - Olá, ${user.nome}!`;
@@ -97,53 +96,53 @@ function applyRBAC(role) {
   };
 
   // --- Menu Lateral ---
-  // Relatórios: Visível para TI e RH
   if (!roles.isTI && !roles.isRH) {
     document.querySelector('a[href="#relatorios"]')?.closest('a').remove();
   }
-  // Configurações: Visível apenas para TI
   if (!roles.isTI) {
     document.querySelector('a[href="#configuracoes"]')?.closest('a').remove();
   }
   
-  // --- Seções do Main ---
-  // Seção de Registro: Visível apenas para TI
+  // --- Seções Principais ---
   if (!roles.isTI) {
     document.querySelector('.registration')?.remove();
   }
-
-  // Seção de Mural (Criar Aviso): Visível para TI, RH e Professor
   if (!roles.isTI && !roles.isRH && !roles.isProfessor) {
      document.querySelector('.mural .form-container')?.remove();
   }
-  
-  // Seção de Gráficos: Visível para TI e RH
   if (!roles.isTI && !roles.isRH) {
     document.querySelector('.charts')?.remove();
     document.querySelector('section.chart')?.remove();
   }
 
   // Áreas Especiais (conforme seu HTML)
-  // Criação de Cursos: Professor
   if (roles.isProfessor) {
-    document.getElementById('area-criacao-cursos').style.display = 'block';
+    const area = document.getElementById('area-criacao-cursos');
+    if (area) area.style.display = 'block';
   }
-  // Atribuição de Professores: TI
   if (roles.isTI) {
-    document.getElementById('area-atribuicao-professores').style.display = 'block';
+    const area = document.getElementById('area-atribuicao-professores');
+    if (area) area.style.display = 'block';
   }
 }
 
 /**
- * Carrega dados dinâmicos da API
+ * Carrega os cards dos cursos na tela, respeitando as permissões do usuário.
  */
-async function loadInitialData() {
-  // Carrega os cursos
+async function loadCourseCards() {
+  const container = document.querySelector('.courses-container');
+  if (!container) return;
+
   try {
-    const response = await api.getAllCourses();
-    const container = document.querySelector('.courses-container');
-    
-    if (response.success && container) {
+    let response;
+    // A lógica de permissão original foi mantida aqui
+    if (currentUser && currentUser.role === 'Professor') {
+      response = await api.getCoursesByProfessor(currentUser.id);
+    } else {
+      response = await api.getAllCourses();
+    }
+
+    if (response.success) {
       if (response.data.length === 0) {
         container.innerHTML = '<p>Nenhum curso encontrado.</p>';
         return;
@@ -151,33 +150,84 @@ async function loadInitialData() {
       
       container.innerHTML = ''; // Limpa o container
       response.data.forEach(course => {
-        // Cria o "card" do curso
         const card = document.createElement('div');
-        card.className = 'course-card'; // Adicione estilos para .course-card no CSS
+        card.className = 'course-card'; 
+        card.dataset.courseId = course.id; // Adiciona o ID do curso ao elemento
         card.innerHTML = `
           <h4>${course.titulo}</h4>
           <p>Carga horária: ${course.carga_horaria || 'N/D'}h</p>
         `;
         container.appendChild(card);
       });
+      
+      // Após criar os cards, configura os eventos de clique neles
+      setupCourseSelection();
     } else {
       container.innerHTML = `<p style="color: red;">${response.error || 'Não foi possível carregar os cursos.'}</p>`;
     }
   } catch (err) {
     console.error('Erro ao carregar cursos:', err);
+    container.innerHTML = '<p style="color: red;">Erro de comunicação ao buscar os cursos.</p>';
   }
-  
-  // (Aqui você chamaria as funções para carregar avisos, relatórios, etc.)
+}
+
+/**
+ * Adiciona os eventos de clique aos cards de curso para seleção.
+ */
+function setupCourseSelection() {
+    const courseCards = document.querySelectorAll('.course-card');
+
+    courseCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const isAlreadySelected = card.classList.contains('selected');
+            
+            // Primeiro, remove a seleção de todos os cards
+            courseCards.forEach(c => c.classList.remove('selected'));
+
+            if (isAlreadySelected) {
+                // Se o card clicado já estava selecionado, ele é desmarcado.
+                // Carregamos os dados de TODOS os cursos.
+                loadDashboardData(); // Chama sem ID
+            } else {
+                // Se não estava selecionado, o marcamos.
+                card.classList.add('selected');
+                const courseId = card.dataset.courseId;
+                // Carregamos os dados apenas para o curso selecionado.
+                loadDashboardData(courseId);
+            }
+        });
+    });
+}
+
+/**
+ * Carrega os dados do dashboard (gráficos, relatórios, etc.).
+ * @param {string|null} courseId - O ID do curso para filtrar. Se for nulo, carrega dados de todos os cursos.
+ */
+async function loadDashboardData(courseId = null) {
+    console.log(`Carregando dados do dashboard para o curso: ${courseId || 'Todos'}`);
+    
+    // TODO: Implementar a lógica para buscar dados da API e renderizar os gráficos.
+    // Exemplo:
+    // const reportData = await api.getReportData({ courseId: courseId });
+    // renderCharts(reportData); // Sua função que desenha os gráficos
+    
+    // Exemplo visual para feedback:
+    const chartSection = document.querySelector('section.chart');
+    if (chartSection) {
+        const title = chartSection.querySelector('.section-title');
+        if (title) {
+            title.textContent = courseId ? `Relatórios do Curso Selecionado` : 'Relatórios Gerais';
+        }
+    }
 }
 
 // --- Handlers de Formulário ---
 
 async function handleRegistrationSubmit(e) {
- e.preventDefault();
+  e.preventDefault();
   const form = e.target;
   const button = form.querySelector('button[type="submit"]');
   
-  // Pegar dados pelos IDs que definimos no HTML
   const nome = document.getElementById('regNome').value;
   const email = document.getElementById('regEmail').value;
   const password = document.getElementById('regPassword').value;
@@ -196,9 +246,8 @@ async function handleRegistrationSubmit(e) {
 
     if (response.success) {
       alert('Usuário criado com sucesso!');
-      form.reset(); // Limpa o formulário
+      form.reset();
     } else {
-      // Mostra o erro vindo do backend (ex: "Email já em uso")
       alert(`Erro ao salvar: ${response.error}`);
     }
   } catch (err) {
@@ -208,4 +257,4 @@ async function handleRegistrationSubmit(e) {
     button.disabled = false;
     button.textContent = 'Salvar';
   }
-}
+} 
