@@ -1,0 +1,31 @@
+-- 1. Seleciona o banco de dados correto (baseado no seu .env)
+
+-- 2. Insere as Roles (perfis de usuário)
+-- Estes nomes DEVEVEM corresponder ao seu arquivo constants.js
+INSERT INTO roles (nome, descricao) VALUES
+('TI', 'Administrador do Sistema'),
+('RH', 'Recursos Humanos'),
+('Professor', 'Instrutor do curso'),
+('Aluno', 'Estudante');
+
+-- 3. Insere os Usuários de Teste
+-- SENHA DE TODOS: senha123
+-- HASH BCRYPT (para 'senha123'): $2b$10$J/9d..iV.E.P.v.d.M.b.S.m.G.u.K.O.c.D.l.w.G.I.b.e.n.c.F.p.w.G
+INSERT INTO usuarios (funcional, nome, email, password_hash, role_id) VALUES
+('11111', 'Admin TI', 'ti@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 1),
+('22222', 'Recursos Humanos', 'rh@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 2),
+('12121','Prof. Carlos', 'prof@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 3),
+('12345','Aluna Beatriz', 'aluno@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 4);
+
+-- 4. Insere Cursos de Teste
+-- (Assume que o 'Prof. Carlos' tem o ID 3)
+INSERT INTO cursos (titulo, descricao, carga_horaria, professor_id, imagem_path) VALUES
+('Introdução ao Electron', 'Curso para construir apps desktop com JS.', 40, 3, 'aprenda-youtube.svg'),
+('Gestão de Projetos Ágeis', 'Curso sobre Scrum e Kanban.', 20, 3, 'auxiliar-administrativo.svg');
+
+-- 5. Insere Matrículas de Teste
+-- (Assume que a 'Aluna Beatriz' tem o ID 4 e os cursos são ID 1 e 2)
+-- Esta seção é VITAL para testar os gráficos de relatórios.
+INSERT INTO matriculas (aluno_id, curso_id, status, nota_final) VALUES
+(4, 1, 'cursando', NULL),
+(4, 2, 'concluido', 8.5);

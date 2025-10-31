@@ -10,7 +10,7 @@ CREATE TABLE roles (
 
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    funcional 
+    funcional VARCHAR(10) UNIQUE,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
@@ -31,6 +31,7 @@ CREATE TABLE cursos (
     descricao TEXT,
     carga_horaria INT, -- Em horas
     professor_id INT, -- O professor responsável
+    imagem_path VARCHAR(255) DEFAULT NULL, -- Caminho para a imagem
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
