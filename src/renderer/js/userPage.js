@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function initializePage(user) {
   renderUserInfo(user);
-  applyRBAC(user.role);
+  applyRBAC(user.role_name);
   attachGlobalListeners();
 }
 
