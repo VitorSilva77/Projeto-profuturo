@@ -26,6 +26,7 @@ function registerIpcHandlers() {
 
   // Relatórios 
   ipcMain.handle('reports:course-performance', reportController.handleGetCoursePerformance);
+  ipcMain.handle('reports:enrollment-status', reportController.handleGetEnrollmentStatus);
 }
 
 function createWindow() {

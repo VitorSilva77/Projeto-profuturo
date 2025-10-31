@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/css/fonts.css">
     <link rel="stylesheet" href="../assets/css/media.css">
     <link rel="stylesheet" href="../assets/css/userPage.css">
+    <link rel="stylesheet" href="../assets/css/darkmode.css">
     <script src="../../../node_modules/chart.js/dist/chart.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
@@ -27,11 +28,18 @@
               <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
               <a href="#" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
               <a href="#" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
-              <a href="#" class="item"><i class="fa-solid fa-gear"></i> Configurações</a>
+              <div class="item theme-switcher">
+                <i class="fa-solid fa-moon"></i>
+                <span>Modo Escuro</span>
+                <label class="switch">
+                  <input type="checkbox" id="darkModeToggle">
+                  <span class="slider round"></span>
+                </label>
+              </div>
               <button class="logout-button">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Sair</span>
-              </button
+              </button>
           </div>
       </aside>
 

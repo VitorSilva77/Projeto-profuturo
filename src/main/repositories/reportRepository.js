@@ -15,9 +15,24 @@ async function getCoursePerformance(courseId = null) {
     query.where('cursos.id', courseId);
   }
 
-  return query;
+  return await query;
+}
+
+async function getEnrollmentStatus(courseId = null) {
+  const query = getDb()('matriculas')
+    .select('status')
+    .count('id as count')
+    .whereIn('status', ['concluido', 'cursando'])
+    .groupBy('status');
+
+  if (courseId) {
+    query.where('curso_id', courseId);
+  }
+
+  return await query;
 }
 
 module.exports = {
-  getCoursePerformance
+  getCoursePerformance,
+  getEnrollmentStatus
 };

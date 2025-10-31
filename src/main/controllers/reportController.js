@@ -9,6 +9,16 @@ async function handleGetCoursePerformance(event, courseId) {
   }
 }
 
+async function handleGetEnrollmentStatus(event, courseId) {
+  try {
+    const data = await reportService.getEnrollmentStatusReport(courseId);
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
 module.exports = { 
-  handleGetCoursePerformance 
+  handleGetCoursePerformance,
+  handleGetEnrollmentStatus
 };

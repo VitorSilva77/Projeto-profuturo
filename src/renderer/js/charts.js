@@ -2,46 +2,6 @@ let currentAttendanceChart = null;
 let currentPerformanceChart = null;
 let currentProgressChart = null;
 
-function loadAttendanceChart(courseId = null) {
-  const attendanceCtx = document.getElementById('attendanceChart');
-  if (!attendanceCtx) return;
-
-  // Destrói o gráfico anterior
-  if (currentAttendanceChart) {
-    currentAttendanceChart.destroy();
-  }
-  
-  // Lógica de exemplo:
-  // (Você precisará de uma API de backend para frequência)
-  let data = [85, 15];
-  let title = 'Taxa de Frequência (Geral)';
-  if (courseId) {
-    data = [92, 8]; // Dados de exemplo para curso específico
-    title = `Taxa de Frequência (Curso Específico)`;
-  }
-
-  currentAttendanceChart = new Chart(attendanceCtx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Presente', 'Ausente'],
-      datasets: [{
-        label: 'Frequência',
-        data: data, // Dados dinâmicos
-        backgroundColor: ['#4CAF50', '#F44336'],
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: title // Título dinâmico
-        }
-      }
-    }
-  });
-}
-
 
 async function loadPerformanceChart(courseId = null) {
   const performanceCtx = document.getElementById('performanceChart');
@@ -102,6 +62,59 @@ async function loadPerformanceChart(courseId = null) {
         y: {
           beginAtZero: true,
           max: 10 
+        }
+      }
+    }
+  });
+}
+
+async function loadEnrollmentStatusChart(courseId = null) {
+  const statusCtx = document.getElementById('attendanceChart'); 
+  if (!statusCtx) return;
+
+  if (currentStatusChart) {
+    currentStatusChart.destroy();
+  }
+
+  let title = 'Status de Matrículas (Geral)';
+  if (courseId) {
+    const courseName = document.querySelector(`#courseFilter option[value="${courseId}"]`).textContent;
+    title = `Status de Matrículas (${courseName})`;
+  }
+
+  const response = await api.getEnrollmentStatusReport(courseId);
+  
+  let concludedCount = 0;
+  let inProgressCount = 0;
+
+  if (response.success && response.data) {
+    response.data.forEach(item => {
+      if (item.status === 'concluido') {
+        concludedCount = item.count;
+      } else if (item.status === 'cursando') {
+        inProgressCount = item.count;
+      }
+    });
+  } else {
+    console.error('Erro ao buscar dados de status:', response.error);
+  }
+
+  currentStatusChart = new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Concluído', 'Cursando'],
+      datasets: [{
+        label: 'Status de Alunos',
+        data: [concludedCount, inProgressCount],
+        backgroundColor: ['#36A2EB', '#FFCE56'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: title
         }
       }
     }

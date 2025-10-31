@@ -39,6 +39,7 @@ function initializePage(user) {
   renderUserInfo(user);
   applyRBAC(user.role_name);
   attachGlobalListeners();
+  initializeThemeSwitcher();
 }
 
 async function loadPageContent() {
@@ -115,6 +116,31 @@ function applyRBAC(role) {
     const area = document.getElementById('area-atribuicao-professores');
     if (area) area.style.display = 'block';
   }
+}
+
+function initializeThemeSwitcher() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    if (!darkModeToggle) return;
+
+    const applyTheme = () => {
+        if (darkModeToggle.checked) {
+            body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    };
+
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        darkModeToggle.checked = true;
+    }
+
+    applyTheme();
+
+    darkModeToggle.addEventListener('change', applyTheme);
 }
 
 
@@ -206,8 +232,8 @@ async function loadDashboardData(courseId = null) {
         await loadPerformanceChart(courseId);
       }
       
-      if (typeof loadAttendanceChart === 'function') {
-        loadAttendanceChart(courseId); 
+      if (typeof loadEnrollmentStatusChart === 'function') {
+        loadEnrollmentStatusChart(courseId); 
       }
 
     } catch (err) {

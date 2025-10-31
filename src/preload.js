@@ -43,6 +43,7 @@ const api = {
 
   //relatórios
   getCoursePerformanceReport: (courseId) => ipcRenderer.invoke('reports:course-performance', courseId),
+  getEnrollmentStatusReport: (courseId) => ipcRenderer.invoke('reports:enrollment-status', courseId),
   //auditoria
   getAuditLogs: () => ipcRenderer.invoke('audit:get-logs'),
   
