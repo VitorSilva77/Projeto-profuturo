@@ -1,4 +1,4 @@
-const api = window.api;
+var api = window.api;
 
 if (!api) {
   console.error(

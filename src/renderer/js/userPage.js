@@ -1,12 +1,29 @@
 let currentUser = null;
 
-(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('USERPAGE.JS: DOMContentLoaded - Página carregada.');
   try {
-    const response = await api.getSession(); 
+    const storedUser = sessionStorage.getItem('profuturo_currentUser');
+    console.log('USERPAGE.JS: Valor lido do sessionStorage:', storedUser);
+    if (storedUser) {
+      currentUser = JSON.parse(storedUser);
+      console.log('USERPAGE.JS: Usuário (após JSON.parse):', currentUser);
+      console.log('Sessão restaurada da sessionStorage.');
+    } else {
+      
+      console.log('Nenhum usuário na sessionStorage, tentando api.getSession()...');
+      const response = await api.getSession(); 
+      if (response.success && response.user) {
+        currentUser = response.user;
+        console.log('Sessão restaurada da api.getSession().');
+      }
+    }
 
-    if (response.success && response.user) {
-      currentUser = response.user;
-      initializeApp(currentUser);
+    if (currentUser) {
+      console.log(`USERPAGE.JS: Renderizando página para: ${currentUser.nome}`);
+      console.log(`Usuário logado: ${currentUser.nome} (Role: ${currentUser.role})`);
+      initializePage(currentUser); 
+      await loadPageContent();
     } else {
       console.warn('Nenhuma sessão encontrada. Redirecionando para o login.');
       window.location.href = 'index.html';
@@ -15,19 +32,7 @@ let currentUser = null;
     console.error('Erro fatal ao verificar sessão:', err);
     window.location.href = 'index.html';
   }
-})();
-
-function initializeApp(user) {
-  document.addEventListener('DOMContentLoaded', async () => {
-    console.log(`Usuário logado: ${user.nome} (Role: ${user.role})`);
-    
-    attachGlobalListeners();
-    renderUserInfo(user);
-    applyRBAC(user.role);
-    
-    await loadPageContent();
-  });
-}
+});
 
 async function loadPageContent() {
  
@@ -40,6 +45,7 @@ function attachGlobalListeners() {
   if (logoutButton) {
     logoutButton.addEventListener('click', async () => {
       try {
+        sessionStorage.removeItem('profuturo_currentUser');
         await api.logout();
         window.location.href = 'index.html';
       } catch (err) {

@@ -19,7 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await api.login({ funcional, password });
 
       if (response.success) {
-        console.log('Login bem-sucedido:', response.user);
+        console.log('LOGIN.JS: Login bem-sucedido, dados do usuário:', response.user); 
+        
+        const userString = JSON.stringify(response.user);
+        sessionStorage.setItem('profuturo_currentUser', userString);
+
+        console.log('LOGIN.JS: Usuário salvo no sessionStorage:', userString);
         window.location.href = '../views/userPage.html';
       } else {
 
