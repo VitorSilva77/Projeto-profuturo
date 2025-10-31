@@ -42,9 +42,10 @@ const api = {
   createUser: (userData) => ipcRenderer.invoke('users:create', userData),
 
   //relatórios
-  getCoursePerformanceReport: () => ipcRenderer.invoke('reports:course-performance'), 
-
+  getCoursePerformanceReport: (courseId) => ipcRenderer.invoke('reports:course-performance', courseId),
   //auditoria
+  getAuditLogs: () => ipcRenderer.invoke('audit:get-logs'),
+  
 };
 
 try {

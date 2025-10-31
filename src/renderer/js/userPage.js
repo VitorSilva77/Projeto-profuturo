@@ -18,21 +18,21 @@ let currentUser = null;
 })();
 
 function initializeApp(user) {
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     console.log(`Usuário logado: ${user.nome} (Role: ${user.role})`);
     
     attachGlobalListeners();
     renderUserInfo(user);
     applyRBAC(user.role);
     
-    loadPageContent();
+    await loadPageContent();
   });
 }
 
 async function loadPageContent() {
  
   await loadCourseCards();
-  await loadDashboardData();
+  await loadDashboardData(null);
 }
 
 function attachGlobalListeners() {
@@ -88,7 +88,7 @@ function applyRBAC(role) {
   if (!roles.isTI && !roles.isRH && !roles.isProfessor) {
      document.querySelector('.mural .form-container')?.remove();
   }
-  if (!roles.isTI && !roles.isRH) {
+  if (!roles.isTI && !roles.isRH && !roles.isProfessor) {
     document.querySelector('.charts')?.remove();
     document.querySelector('section.chart')?.remove();
   }
@@ -128,9 +128,17 @@ async function loadCourseCards() {
         const card = document.createElement('div');
         card.className = 'course-card'; 
         card.dataset.courseId = course.id;
+
+        const imagePath = course.imagem_path 
+          ? `../assets/images/${course.imagem_path}` 
+          : '../assets/images/teste1.png'; //imagem defaut que carreag se nn existir o caminho na tabela
+
         card.innerHTML = `
-          <h4>${course.titulo}</h4>
-          <p>Carga horária: ${course.carga_horaria || 'N/D'}h</p>
+          <img src="${imagePath}" alt="${course.titulo}" class="course-card-image">
+          <div class="course-card-content">
+            <h4>${course.titulo}</h4>
+            <p>Carga horária: ${course.carga_horaria || 'N/D'}h</p>
+          </div>
         `;
         container.appendChild(card);
       });
@@ -179,6 +187,18 @@ async function loadDashboardData(courseId = null) {
         if (title) {
             title.textContent = courseId ? `Relatórios do Curso Selecionado` : 'Relatórios Gerais';
         }
+    }
+    try {
+      if (typeof loadPerformanceChart === 'function') {
+        await loadPerformanceChart(courseId);
+      }
+      
+      if (typeof loadAttendanceChart === 'function') {
+        loadAttendanceChart(courseId); 
+      }
+
+    } catch (err) {
+      console.error('Erro ao recarregar os gráficos:', err);
     }
 }
 
