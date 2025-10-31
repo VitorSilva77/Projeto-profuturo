@@ -1,11 +1,9 @@
-// src/main/database/connection.js
-
 const knex = require('knex');
 let dbInstance;
 
 function init() {
   if (dbInstance) {
-    return; // Já foi inicializado
+    return; 
   }
   
   console.log('Inicializando conexão com o banco de dados...');
@@ -17,17 +15,15 @@ function init() {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      // ssl: { rejectUnauthorized: false } // Descomente se necessário
     },
     pool: { min: 2, max: 10 }
   });
 
-  // Testa a conexão
   dbInstance.raw('SELECT 1')
     .then(() => console.log('Conexão com o banco de dados estabelecida com sucesso.'))
     .catch((err) => {
       console.error('Falha ao conectar ao banco de dados:', err);
-      process.exit(1); // Fecha a aplicação se não conseguir conectar
+      process.exit(1); 
     });
 }
 

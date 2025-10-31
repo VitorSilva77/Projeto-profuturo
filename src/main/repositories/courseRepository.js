@@ -6,9 +6,6 @@ async function create(courseData) {
   return getDb()('cursos').where('id', newCourseId).first();
 }
 
-/**
- * Busca todos os cursos.
- */
 async function findAll() {
   return getDb()('cursos').select('*');
 }

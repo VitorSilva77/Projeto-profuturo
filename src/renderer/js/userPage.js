@@ -1,9 +1,5 @@
 let currentUser = null;
 
-/**
- * 1. GUARDA DE SEGURANÇA
- * Esta função (IIFE) executa imediatamente para proteger a página.
- */
 (async () => {
   try {
     const response = await api.getSession(); 
@@ -21,11 +17,6 @@ let currentUser = null;
   }
 })();
 
-/**
- * 2. INICIALIZAÇÃO
- * Esta função só é chamada DEPOIS que a sessão é confirmada.
- * Ela espera o DOM carregar para manipular os elementos.
- */
 function initializeApp(user) {
   document.addEventListener('DOMContentLoaded', () => {
     console.log(`Usuário logado: ${user.nome} (Role: ${user.role})`);
@@ -34,24 +25,17 @@ function initializeApp(user) {
     renderUserInfo(user);
     applyRBAC(user.role);
     
-    // Inicia o carregamento de todo o conteúdo dinâmico da página
     loadPageContent();
   });
 }
 
-/**
- * 3. ORQUESTRADOR DE CONTEÚDO
- * Chama as funções para carregar as diferentes partes da página.
- */
 async function loadPageContent() {
-  // Primeiro, carrega os cards dos cursos e configura os eventos de clique
+ 
   await loadCourseCards();
-  // Em seguida, carrega os dados do dashboard (gráficos, etc.) para "Todos os Cursos"
   await loadDashboardData();
 }
 
 function attachGlobalListeners() {
-  // Evento de Logout
   const logoutButton = document.querySelector('.logout-button');
   if (logoutButton) {
     logoutButton.addEventListener('click', async () => {
@@ -64,13 +48,11 @@ function attachGlobalListeners() {
     });
   }
 
-  // Evento do formulário de Registro (se existir)
   const registrationForm = document.querySelector('.registration form');
   if (registrationForm) {
     registrationForm.addEventListener('submit', handleRegistrationSubmit);
   }
 
-  // Evento do formulário de Avisos (se existir)
   const noticeForm = document.getElementById('formNotice');
   if (noticeForm) {
     noticeForm.addEventListener('submit', handleNoticeSubmit);
@@ -84,10 +66,6 @@ function renderUserInfo(user) {
   }
 }
 
-/**
- * Aplica o Controle de Acesso (RBAC) - Mostra/Esconde seções
- * Baseado nas roles: 'TI', 'RH', 'Professor'
- */
 function applyRBAC(role) {
   const roles = {
     isTI: role === 'TI',
@@ -126,16 +104,13 @@ function applyRBAC(role) {
   }
 }
 
-/**
- * Carrega os cards dos cursos na tela, respeitando as permissões do usuário.
- */
+
 async function loadCourseCards() {
   const container = document.querySelector('.courses-container');
   if (!container) return;
 
   try {
     let response;
-    // A lógica de permissão original foi mantida aqui
     if (currentUser && currentUser.role === 'Professor') {
       response = await api.getCoursesByProfessor(currentUser.id);
     } else {
@@ -148,11 +123,11 @@ async function loadCourseCards() {
         return;
       }
       
-      container.innerHTML = ''; // Limpa o container
+      container.innerHTML = ''; 
       response.data.forEach(course => {
         const card = document.createElement('div');
         card.className = 'course-card'; 
-        card.dataset.courseId = course.id; // Adiciona o ID do curso ao elemento
+        card.dataset.courseId = course.id;
         card.innerHTML = `
           <h4>${course.titulo}</h4>
           <p>Carga horária: ${course.carga_horaria || 'N/D'}h</p>
@@ -160,7 +135,6 @@ async function loadCourseCards() {
         container.appendChild(card);
       });
       
-      // Após criar os cards, configura os eventos de clique neles
       setupCourseSelection();
     } else {
       container.innerHTML = `<p style="color: red;">${response.error || 'Não foi possível carregar os cursos.'}</p>`;
@@ -171,9 +145,6 @@ async function loadCourseCards() {
   }
 }
 
-/**
- * Adiciona os eventos de clique aos cards de curso para seleção.
- */
 function setupCourseSelection() {
     const courseCards = document.querySelectorAll('.course-card');
 
@@ -181,18 +152,14 @@ function setupCourseSelection() {
         card.addEventListener('click', () => {
             const isAlreadySelected = card.classList.contains('selected');
             
-            // Primeiro, remove a seleção de todos os cards
             courseCards.forEach(c => c.classList.remove('selected'));
 
             if (isAlreadySelected) {
-                // Se o card clicado já estava selecionado, ele é desmarcado.
-                // Carregamos os dados de TODOS os cursos.
-                loadDashboardData(); // Chama sem ID
+              
+                loadDashboardData(); 
             } else {
-                // Se não estava selecionado, o marcamos.
                 card.classList.add('selected');
                 const courseId = card.dataset.courseId;
-                // Carregamos os dados apenas para o curso selecionado.
                 loadDashboardData(courseId);
             }
         });
@@ -200,18 +167,12 @@ function setupCourseSelection() {
 }
 
 /**
- * Carrega os dados do dashboard (gráficos, relatórios, etc.).
+ * Carrega os dados do dashboard 
  * @param {string|null} courseId - O ID do curso para filtrar. Se for nulo, carrega dados de todos os cursos.
  */
 async function loadDashboardData(courseId = null) {
     console.log(`Carregando dados do dashboard para o curso: ${courseId || 'Todos'}`);
-    
-    // TODO: Implementar a lógica para buscar dados da API e renderizar os gráficos.
-    // Exemplo:
-    // const reportData = await api.getReportData({ courseId: courseId });
-    // renderCharts(reportData); // Sua função que desenha os gráficos
-    
-    // Exemplo visual para feedback:
+
     const chartSection = document.querySelector('section.chart');
     if (chartSection) {
         const title = chartSection.querySelector('.section-title');
@@ -220,8 +181,6 @@ async function loadDashboardData(courseId = null) {
         }
     }
 }
-
-// --- Handlers de Formulário ---
 
 async function handleRegistrationSubmit(e) {
   e.preventDefault();

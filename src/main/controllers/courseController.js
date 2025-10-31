@@ -1,5 +1,3 @@
-// src/main/controllers/courseController.js
-
 const courseService = require('../services/courseService');
 
 async function handleGetAllCourses() {

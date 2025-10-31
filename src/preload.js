@@ -1,22 +1,12 @@
-// src/preload.js
-
 const { contextBridge, ipcRenderer } = require('electron');
 
-// O "apiKey" é o nome que daremos à API no objeto 'window' do frontend.
-// Ex: window.api.login(...)
 const apiKey = 'api';
 
-// Esta é a API que será exposta
 const api = {
-  /**
-   * -----------------------------------------------------------------
-   * Autenticação (auth)
-   * -----------------------------------------------------------------
-   */
 
   /**
-   * Tenta fazer login no sistema.
-   * @param {object} credentials - { email, password }
+   * Tenta fazer login 
+   * @param {object} credentials - { funcional, password }
    * @returns {Promise<{success: boolean, user?: object, error?: string}>}
    */
   login: (credentials) => ipcRenderer.invoke('auth:login', credentials),
@@ -28,17 +18,12 @@ const api = {
   logout: () => ipcRenderer.invoke('auth:logout'),
 
   /**
-   * Verifica se há uma sessão de usuário ativa no backend.
+   * Verifica se há uma sessão de usuário ativa 
    * @returns {Promise<{success: boolean, user?: object, error?: string}>}
    */
   getSession: () => ipcRenderer.invoke('auth:get-session'),
 
-  /**
-   * -----------------------------------------------------------------
-   * Cursos (courses)
-   * -----------------------------------------------------------------
-   */
-
+  //cursos
   /**
    * Busca todos os cursos.
    * @returns {Promise<{success: boolean, data?: object[], error?: string}>}
@@ -47,47 +32,21 @@ const api = {
   getCoursesByProfessor: (professorId) => ipcRenderer.invoke('courses:getByProfessor', professorId),
 
   /**
-   * Cria um novo curso.
+   * Cria um novo curso
    * @param {object} courseData - { titulo, descricao, carga_horaria, professor_id }
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
   createCourse: (courseData) => ipcRenderer.invoke('courses:create', courseData),
   
-  // (Aqui você adicionaria as outras chamadas do CRUD de cursos)
-  // updateCourse: (id, courseData) => ipcRenderer.invoke('courses:update', id, courseData),
-  // deleteCourse: (id) => ipcRenderer.invoke('courses:delete', id),
-  // getCourseById: (id) => ipcRenderer.invoke('courses:get-by-id', id),
-
-  /**
-   * -----------------------------------------------------------------
-   * Usuários (users) - (Exemplos de como seriam)
-   * -----------------------------------------------------------------
-   */
-  
-  // getAllUsers: () => ipcRenderer.invoke('users:get-all'),
+  //usuários
   createUser: (userData) => ipcRenderer.invoke('users:create', userData),
 
-  /**
-   * -----------------------------------------------------------------
-   * Relatórios (reports) - (Exemplos de como seriam)
-   * -----------------------------------------------------------------
-   */
-  
+  //relatórios
   getCoursePerformanceReport: () => ipcRenderer.invoke('reports:course-performance'), 
 
-  /**
-   * -----------------------------------------------------------------
-   * Auditoria (audit) - (Exemplos de como seriam)
-   * -----------------------------------------------------------------
-   */
-  
-  // getAuditLogs: (filters) => ipcRenderer.invoke('audit:get-logs', filters),
+  //auditoria
 };
 
-// -----------------------------------------------------------------
-// Exposição Segura
-// -----------------------------------------------------------------
-// Garante que o preload só funcione se a 'contextIsolation' estiver ativa
 try {
   contextBridge.exposeInMainWorld(apiKey, api);
 } catch (error) {

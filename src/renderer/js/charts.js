@@ -1,20 +1,13 @@
-// src/renderer/js/charts.js
-
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof Chart === 'undefined') {
     console.warn('Chart.js não foi carregado. Os gráficos não serão renderizados.');
     return;
   }
 
-  // Inicia o carregamento dos gráficos que dependem de dados
   loadAttendanceChart();
   loadPerformanceChart();
 });
 
-/**
- * Carrega o Gráfico 1: Frequência (Attendance)
- * (Por enquanto, usa dados estáticos)
- */
 function loadAttendanceChart() {
   const attendanceCtx = document.getElementById('attendanceChart');
   if (attendanceCtx) {
@@ -41,10 +34,7 @@ function loadAttendanceChart() {
   }
 }
 
-/**
- * Carrega o Gráfico 2: Desempenho por Curso
- * (Busca dados reais do backend via API)
- */
+
 async function loadPerformanceChart() {
   const performanceCtx = document.getElementById('performanceChart');
   if (!performanceCtx) return;
@@ -60,8 +50,8 @@ async function loadPerformanceChart() {
     if (response.success && response.data.length > 0) {
       // 2. Processa os dados recebidos
       chartLabels = response.data.map(item => item.titulo);
-      chartData = response.data.map(item => parseFloat(item.mediaNota).toFixed(2)); // Garante 2 casas decimais
-      chartColors = chartData.map(() => '#2196F3'); // Gera uma cor para cada barra
+      chartData = response.data.map(item => parseFloat(item.mediaNota).toFixed(2)); 
+      chartColors = chartData.map(() => '#2196F3'); 
 
     } else if (response.data.length === 0) {
       chartLabels = ['Nenhum dado encontrado'];
@@ -73,7 +63,6 @@ async function loadPerformanceChart() {
       console.error(response.error);
     }
   } catch (err) {
-    // Erro de comunicação (API não registrada, backend caiu, etc.)
     chartLabels = ['Erro de conexão com API'];
     chartData = [0];
     chartColors = ['#F44336'];
@@ -102,7 +91,7 @@ async function loadPerformanceChart() {
       scales: {
         y: {
           beginAtZero: true,
-          max: 10 // Assumindo que a nota máxima é 10
+          max: 10 
         }
       }
     }

@@ -1,4 +1,3 @@
-// src/main/controllers/reportController.js
 const reportService = require('../services/reportService');
 
 async function handleGetCoursePerformance(event) {

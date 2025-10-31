@@ -1,11 +1,7 @@
-// src/main/services/authService.js
-
 const userRepository = require('../repositories/userRepository');
 const auditService = require('./auditService');
 const { comparePassword } = require('../utils/security');
 
-// Armazena o usuário logado em memória no processo principal.
-// Esta é a nossa "sessão" de backend.
 let currentUser = null;
 
 async function login(funcional, password) {
@@ -18,7 +14,7 @@ async function login(funcional, password) {
   console.log('============================================');
   console.log('[DEBUG AUTH] Tentando autenticar...');
   console.log(`[DEBUG AUTH] Funcional recebido: "${funcional}"`);
-  console.log(`[DEBUG AUTH] Senha recebida (frontend): "${password}"`); // As aspas ajudam a ver espaços
+  console.log(`[DEBUG AUTH] Senha recebida (frontend): "${password}"`); 
   console.log(`[DEBUG AUTH] Hash lido (banco de dados): "${user.password_hash}"`);
   console.log('============================================');
 
@@ -28,18 +24,15 @@ async function login(funcional, password) {
     throw new Error('AUTENTICACAO_FALHOU: Senha incorreta.');
   }
 
-  // Senha válida! Armazena o usuário na "sessão"
   currentUser = {
     id: user.id,
     nome: user.nome,
     email: user.email,
-    role: user.role_name // Ex: 'TI'
+    role: user.role_name 
   };
 
-  // Registra o log de auditoria (não precisa esperar)
   auditService.log(currentUser.id, 'USER_LOGIN_SUCCESS');
 
-  // Retorna o usuário para o frontend (sem o hash!)
   return currentUser;
 }
 
@@ -51,17 +44,11 @@ function logout() {
   return true;
 }
 
-/**
- * Usado por outros serviços para obter o usuário da sessão atual.
- */
+
 function getCurrentUser() {
   return currentUser;
 }
 
-/**
- * Usado pelo frontend para verificar se já existe uma sessão ativa
- * (ex: ao recarregar a janela).
- */
 function getSession() {
   return currentUser;
 }

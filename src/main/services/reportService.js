@@ -1,4 +1,3 @@
-// src/main/services/reportService.js
 const reportRepository = require('../repositories/reportRepository');
 const { getCurrentUser } = require('./authService');
 const { checkRole } = require('../utils/security');
@@ -10,7 +9,6 @@ async function getCoursePerformanceReport() {
     throw new Error('Não autenticado.');
   }
 
-  // REGRA DE NEGÓCIO: Somente TI e RH podem ver relatórios
   checkRole(user.role, [ROLES.TI, ROLES.RH]);
   
   return reportRepository.getCoursePerformance();

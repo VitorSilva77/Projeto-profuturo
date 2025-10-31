@@ -1,10 +1,5 @@
-// src/main/repositories/userRepository.js
-
 const { getDb } = require('../database/connection');
 
-/**
- * Busca um usuário pelo email, incluindo sua role.
- */
 async function findByEmail(email) {
   return getDb()('usuarios')
     .join('roles', 'usuarios.role_id', '=', 'roles.id')
@@ -15,19 +10,15 @@ async function findByEmail(email) {
       'usuarios.email',
       'usuarios.password_hash',
       'usuarios.is_active',
-      'roles.nome as role_name' // Renomeia 'roles.nome' para 'role_name'
+      'roles.nome as role_name' 
     )
-    .first(); // Retorna o primeiro resultado ou undefined
+    .first(); 
 }
 
-/**
- * (NOVA FUNÇÃO)
- * Busca um usuário pelo código funcional, incluindo sua role.
- */
 async function findByFuncional(funcional) {
   return getDb()('usuarios')
     .join('roles', 'usuarios.role_id', '=', 'roles.id')
-    .where('usuarios.funcional', funcional) // <- A MUDANÇA É AQUI
+    .where('usuarios.funcional', funcional) 
     .select(
       'usuarios.id',
       'usuarios.nome',
@@ -39,19 +30,15 @@ async function findByFuncional(funcional) {
     .first();
 }
 
-/**
- * Cria um novo usuário.
- */
+
 async function create(userData) {
 
   const [newUserId] = await getDb()('usuarios').insert(userData);
   return getDb()('usuarios').where('id', newUserId).first();
 }
 
-// ... adicione outras funções (findById, findAll, update, delete) conforme necessário
-
 module.exports = {
   findByEmail,
   create,
-  findByFuncional // <- ADICIONADO A EXPORTAÇÃO
+  findByFuncional 
 };

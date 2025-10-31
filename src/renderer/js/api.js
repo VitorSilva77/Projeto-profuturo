@@ -1,9 +1,3 @@
-// src/renderer/js/api.js
-
-/**
- * Expõe a API do preload (window.api) para uma variável global 'api'
- * para ser usada por outros scripts na mesma página.
- */
 const api = window.api;
 
 if (!api) {

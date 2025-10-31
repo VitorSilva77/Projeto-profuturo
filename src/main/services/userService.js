@@ -1,4 +1,3 @@
-// src/main/services/userService.js
 const userRepository = require('../repositories/userRepository');
 const roleRepository = require('../repositories/roleRepository');
 const auditService = require('./auditService');
@@ -14,8 +13,6 @@ async function createUser(userData) {
     throw new Error('Não autenticado.');
   }
 
-  // REGRA DE NEGÓCIO: Somente TI ou RH podem criar usuários.
-  // Você pode mudar isso para [ROLES.TI, ROLES.RH] se o RH também puder
   checkRole(currentUser.role, [ROLES.TI]);
 
   // 1. Validar dados
@@ -28,8 +25,8 @@ async function createUser(userData) {
   if (existingUser) {
     throw new Error('Este e-mail (funcional) já está em uso.');
   }
-
-  // 3. Buscar o ID da Role
+  
+  // 3. Verificar se o tipo de usuário é válido
   const role = await roleRepository.findByName(roleName);
   if (!role) {
     throw new Error(`O tipo de usuário '${roleName}' é inválido.`);

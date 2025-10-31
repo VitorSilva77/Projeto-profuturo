@@ -1,4 +1,4 @@
-const courseRepository = require('../repositories/courseRepository'); // Agora este arquivo existe!
+const courseRepository = require('../repositories/courseRepository'); 
 const auditService = require('./auditService');
 const { getCurrentUser } = require('./authService');
 const { checkRole } = require('../utils/security');
@@ -14,15 +14,12 @@ async function createCourse(courseData) {
     throw new Error('Não autenticado.');
   }
 
-  // REGRA DE NEGÓCIO: Somente TI ou RH podem criar cursos.
   checkRole(user.role, [ROLES.TI, ROLES.RH]);
 
-  // Lógica de validação (ex: verificar se 'titulo' existe)
   if (!courseData.titulo) {
     throw new Error('O título do curso é obrigatório.');
   }
 
-  // Salva no banco de dados REAL
   const newCourse = await courseRepository.create(courseData);
 
   await auditService.log(user.id, 'CREATE_COURSE', 'cursos', newCourse.id, { titulo: newCourse.titulo });
