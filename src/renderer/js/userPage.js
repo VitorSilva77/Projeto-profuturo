@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentUser = null;
       } else {
          console.log('USERPAGE.JS: Usuário (após JSON.parse):', currentUser);
+         await api.restoreSession(currentUser);
          console.log('Sessão restaurada do localStorage.');
       }
     }

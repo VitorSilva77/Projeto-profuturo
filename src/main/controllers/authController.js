@@ -22,7 +22,18 @@ async function handleLogout() {
 }
 
 
+async function handleRestoreSession(event, user) {
+  try {
+    authService.setCurrentUser(user);
+    return { success: true };
+  } catch (error) {
+    console.error('Falha ao restaurar sessão:', error.message);
+    return { success: false, error: error.message };
+  }
+}
+
 module.exports = {
   handleLogin,
   handleLogout,
+  handleRestoreSession 
 };

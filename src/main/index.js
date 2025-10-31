@@ -14,6 +14,7 @@ function registerIpcHandlers() {
   // Autenticação
   ipcMain.handle('auth:login', authController.handleLogin);
   ipcMain.handle('auth:logout', authController.handleLogout);
+  ipcMain.handle('auth:restore-session', authController.handleRestoreSession);
   
 
   // Cursos

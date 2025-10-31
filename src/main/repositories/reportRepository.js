@@ -48,7 +48,7 @@ async function getGradeDistribution(courseId = null) {
     )
     .count('id as quantidade')
     .where('status', 'concluido') 
-    .whereNotNull('faixa_nota')   
+    .whereNotNull('nota_final')  
     .groupBy('faixa_nota')
     .orderBy('faixa_nota', 'asc'); 
 
@@ -62,5 +62,5 @@ async function getGradeDistribution(courseId = null) {
 module.exports = {
   getCoursePerformance,
   getEnrollmentStatus,
-  getGradeDistribution // Adicione a nova função
+  getGradeDistribution 
 };

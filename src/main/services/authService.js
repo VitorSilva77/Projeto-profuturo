@@ -37,8 +37,18 @@ function getCurrentUser() {
   return currentUser;
 }
 
+function setCurrentUser(user) {
+  if (user && user.id) {
+    currentUser = user;
+    console.log(`AUTHSERVICE: Sessão restaurada para ${user.nome}`);
+  } else {
+    currentUser = null;
+  }
+}
+
 module.exports = {
   login,
   logout,
-  getCurrentUser 
+  getCurrentUser ,
+  setCurrentUser
 };

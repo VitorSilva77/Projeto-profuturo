@@ -14,7 +14,7 @@ async function createCourse(courseData) {
     throw new Error('Não autenticado.');
   }
 
-  checkRole(user.role, [ROLES.TI, ROLES.RH]);
+  checkRole(user.role_name, [ROLES.TI, ROLES.RH]);
 
   if (!courseData.titulo) {
     throw new Error('O título do curso é obrigatório.');
