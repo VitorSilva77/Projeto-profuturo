@@ -6,7 +6,7 @@ const { checkRole, hashPassword } = require('../utils/security');
 const { ROLES } = require('../utils/constants');
 
 async function createUser(userData) {
-  const { email, nome, password, roleName } = userData;
+  const { funcional, email, nome, password, roleName } = userData;
   
   const currentUser = getCurrentUser();
   if (!currentUser) {
@@ -16,7 +16,7 @@ async function createUser(userData) {
   checkRole(currentUser.role_name, [ROLES.TI]);
 
   // Valida dados
-  if (!email || !nome || !password || !roleName) {
+  if (!funcional || !email || !nome || !password || !roleName) {
     throw new Error('Todos os campos (nome, email, senha, tipo) são obrigatórios.');
   }
 
@@ -24,6 +24,11 @@ async function createUser(userData) {
   const existingUser = await userRepository.findByEmail(email);
   if (existingUser) {
     throw new Error('Este e-mail (funcional) já está em uso.');
+  }
+
+  const existingUserFuncional = await userRepository.findByFuncional(funcional);
+  if (existingUserFuncional) {
+    throw new Error('Este funcional já está em uso.');
   }
   
   // Verifica se o tipo de usuário é válido
@@ -37,6 +42,7 @@ async function createUser(userData) {
 
   //Salva no banco
   const dbData = {
+    funcional,
     nome,
     email,
     password_hash,

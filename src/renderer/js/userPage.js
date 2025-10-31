@@ -247,12 +247,13 @@ async function handleRegistrationSubmit(e) {
   const form = e.target;
   const button = form.querySelector('button[type="submit"]');
   
+  const funcional = document.getElementById('regFuncional').value;
   const nome = document.getElementById('regNome').value;
   const email = document.getElementById('regEmail').value;
   const password = document.getElementById('regPassword').value;
   const roleName = document.getElementById('regRole').value;
 
-  if (!nome || !email || !password || !roleName) {
+  if (!funcional || !nome || !email || !password || !roleName) {
       alert('Por favor, preencha todos os campos.');
       return;
   }
@@ -261,7 +262,7 @@ async function handleRegistrationSubmit(e) {
   button.textContent = 'Salvando...';
 
   try {
-    const response = await api.createUser({ nome, email, password, roleName });
+    const response = await api.createUser({ funcional, nome, email, password, roleName });
 
     if (response.success) {
       alert('Usuário criado com sucesso!');
