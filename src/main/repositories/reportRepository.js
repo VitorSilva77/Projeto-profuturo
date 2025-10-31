@@ -32,7 +32,35 @@ async function getEnrollmentStatus(courseId = null) {
   return await query;
 }
 
+async function getGradeDistribution(courseId = null) {
+  const query = getDb()('matriculas')
+    .select(
+      getDb().raw(`
+        CASE
+          WHEN nota_final BETWEEN 0 AND 1.99 THEN '0 - 1.9'
+          WHEN nota_final BETWEEN 2 AND 3.99 THEN '2 - 3.9'
+          WHEN nota_final BETWEEN 4 AND 5.99 THEN '4 - 5.9'
+          WHEN nota_final BETWEEN 6 AND 7.99 THEN '6 - 7.9'
+          WHEN nota_final >= 8 THEN '8 - 10'
+          ELSE NULL
+        END AS faixa_nota
+      `)
+    )
+    .count('id as quantidade')
+    .where('status', 'concluido') 
+    .whereNotNull('faixa_nota')   
+    .groupBy('faixa_nota')
+    .orderBy('faixa_nota', 'asc'); 
+
+  if (courseId) {
+    query.where('curso_id', courseId);
+  }
+
+  return await query;
+}
+
 module.exports = {
   getCoursePerformance,
-  getEnrollmentStatus
+  getEnrollmentStatus,
+  getGradeDistribution // Adicione a nova função
 };

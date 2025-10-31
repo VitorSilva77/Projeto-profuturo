@@ -224,12 +224,12 @@ async function loadDashboardData(courseId = null) {
     if (chartSection) {
         const title = chartSection.querySelector('.section-title');
         if (title) {
-            title.textContent = courseId ? `Relatórios do Curso Selecionado` : 'Relatórios Gerais';
+            title.textContent = courseId ? `Gráficos do Curso Selecionado` : 'Gráficos Gerais';
         }
     }
     try {
-      if (typeof loadPerformanceChart === 'function') {
-        await loadPerformanceChart(courseId);
+      if (typeof loadGradeDistributionChart === 'function') {
+        await loadGradeDistributionChart(courseId);
       }
       
       if (typeof loadEnrollmentStatusChart === 'function') {

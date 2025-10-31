@@ -23,7 +23,17 @@ async function getEnrollmentStatusReport(courseId = null) {
   return reportRepository.getEnrollmentStatus(courseId);
 }
 
+async function getGradeDistributionReport(courseId = null) {
+  const user = getCurrentUser();
+  if (!user) {
+    throw new Error('Não autenticado.');
+  }
+  checkRole(user.role, [ROLES.TI, ROLES.RH, ROLES.PROFESSOR]);
+  return reportRepository.getGradeDistribution(courseId); 
+}
+
 module.exports = { 
   getCoursePerformanceReport,
   getEnrollmentStatusReport,
+  getGradeDistributionReport 
 };
