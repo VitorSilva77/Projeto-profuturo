@@ -1,21 +1,21 @@
 let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('USERPAGE.JS: DOMContentLoaded - Página carregada.');
+  
   try {
-    const storedUser = sessionStorage.getItem('profuturo_currentUser');
-    console.log('USERPAGE.JS: Valor lido do sessionStorage:', storedUser);
+    const storedUser = localStorage.getItem('profuturo_currentUser');
+    console.log('USERPAGE.JS: Valor lido do localStorage:', storedUser);
+
     if (storedUser) {
-      currentUser = JSON.parse(storedUser);
-      console.log('USERPAGE.JS: Usuário (após JSON.parse):', currentUser);
-      console.log('Sessão restaurada da sessionStorage.');
-    } else {
-      
-      console.log('Nenhum usuário na sessionStorage, tentando api.getSession()...');
-      const response = await api.getSession(); 
-      if (response.success && response.user) {
-        currentUser = response.user;
-        console.log('Sessão restaurada da api.getSession().');
+      currentUser = JSON.parse(storedUser); 
+ 
+      if (!currentUser || !currentUser.id) { 
+        console.warn('USERPAGE.JS: Sessão encontrada, mas inválida. Limpando.');
+        localStorage.removeItem('profuturo_currentUser');
+        currentUser = null;
+      } else {
+         console.log('USERPAGE.JS: Usuário (após JSON.parse):', currentUser);
+         console.log('Sessão restaurada do localStorage.');
       }
     }
 
@@ -25,14 +25,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializePage(currentUser); 
       await loadPageContent();
     } else {
-      console.warn('Nenhuma sessão encontrada. Redirecionando para o login.');
+      console.warn('Nenhuma sessão válida encontrada. Redirecionando para o login.');
       window.location.href = 'index.html';
     }
   } catch (err) {
-    console.error('Erro fatal ao verificar sessão:', err);
+    console.error('Erro fatal ao verificar sessão (JSON corrompido?):', err);
+    localStorage.removeItem('profuturo_currentUser'); // Limpa o item corrompido
     window.location.href = 'index.html';
   }
 });
+
+function initializePage(user) {
+  renderUserInfo(user);
+  applyRBAC(user.role);
+  attachGlobalListeners();
+}
 
 async function loadPageContent() {
  
@@ -45,7 +52,7 @@ function attachGlobalListeners() {
   if (logoutButton) {
     logoutButton.addEventListener('click', async () => {
       try {
-        sessionStorage.removeItem('profuturo_currentUser');
+        localStorage.removeItem('profuturo_currentUser');
         await api.logout();
         window.location.href = 'index.html';
       } catch (err) {

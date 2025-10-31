@@ -21,17 +21,8 @@ async function handleLogout() {
   }
 }
 
-async function handleGetSession() {
-  try {
-    const user = authService.getSession();
-    return { success: true, user };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-}
 
 module.exports = {
   handleLogin,
   handleLogout,
-  handleGetSession
 };

@@ -14,7 +14,7 @@ function registerIpcHandlers() {
   // Autenticação
   ipcMain.handle('auth:login', authController.handleLogin);
   ipcMain.handle('auth:logout', authController.handleLogout);
-  ipcMain.handle('auth:get-session', authController.handleGetSession);
+  
 
   // Cursos
   ipcMain.handle('courses:get-all', courseController.handleGetAllCourses);

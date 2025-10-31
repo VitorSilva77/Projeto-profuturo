@@ -21,7 +21,7 @@ const api = {
    * Verifica se há uma sessão de usuário ativa 
    * @returns {Promise<{success: boolean, user?: object, error?: string}>}
    */
-  getSession: () => ipcRenderer.invoke('auth:get-session'),
+ 
 
   //cursos
   /**
