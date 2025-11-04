@@ -30,7 +30,6 @@ async function findByFuncional(funcional) {
     .first();
 }
 
-
 async function create(userData) {
 
   const [newUserId] = await getDb()('usuarios').insert(userData);

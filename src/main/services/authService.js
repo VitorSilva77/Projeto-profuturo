@@ -11,7 +11,6 @@ async function login(funcional, password) {
     throw new Error('AUTENTICACAO_FALHOU: Usuário não encontrado ou inativo.');
   }
   
-  
   const isPasswordValid = await comparePassword(password, user.password_hash);
 
   if (!isPasswordValid) {

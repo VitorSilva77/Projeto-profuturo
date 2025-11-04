@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } catch (err) {
     console.error('Erro fatal ao verificar sessão (JSON corrompido?):', err);
-    localStorage.removeItem('profuturo_currentUser'); // Limpa o item corrompido
+    localStorage.removeItem('profuturo_currentUser'); 
     window.location.href = 'index.html';
   }
 });
@@ -108,7 +108,6 @@ function applyRBAC(role) {
     document.querySelector('section.chart')?.remove();
   }
 
-  // Áreas Especiais (conforme seu HTML)
   if (roles.isProfessor) {
     const area = document.getElementById('area-criacao-cursos');
     if (area) area.style.display = 'block';
@@ -151,7 +150,7 @@ async function loadCourseCards() {
 
   try {
     let response;
-    if (currentUser && currentUser.role === 'Professor') {
+    if (currentUser && currentUser.role_name === 'Professor') {
       response = await api.getCoursesByProfessor(currentUser.id);
     } else {
       response = await api.getAllCourses();
@@ -170,8 +169,8 @@ async function loadCourseCards() {
         card.dataset.courseId = course.id;
 
         const imagePath = course.imagem_path 
-          ? `../assets/images/${course.imagem_path}` 
-          : '../assets/images/teste1.png'; //imagem defaut que carreag se nn existir o caminho na tabela
+          ? course.imagem_path
+          : '../assets/images/teste1.png'; // Imagem default local, caso o campo esteja null no banco
 
         card.innerHTML = `
           <img src="${imagePath}" alt="${course.titulo}" class="course-card-image">

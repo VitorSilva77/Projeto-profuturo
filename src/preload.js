@@ -6,14 +6,14 @@ const api = {
 
   /**
    * Restaura a sessão no main process
-   * @param {object} user - O objeto do usuário vindo do localStorage
+   * @param {object} user 
    * @returns {Promise<{success: boolean, error?: string}>}
    */
   restoreSession: (user) => ipcRenderer.invoke('auth:restore-session', user),
 
   /**
    * Tenta fazer login 
-   * @param {object} credentials - { funcional, password }
+   * @param {object} credentials 
    * @returns {Promise<{success: boolean, user?: object, error?: string}>}
    */
   login: (credentials) => ipcRenderer.invoke('auth:login', credentials),

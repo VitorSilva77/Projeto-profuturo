@@ -1,0 +1,127 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+body {
+  background: #f5f6fa;
+  color: #333;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Área principal */
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.section-title{
+    margin-top: 40px;
+    color: black;
+}
+
+/* Filtros e Busca */
+.filters {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-bar {
+    flex-grow: 1;
+    position: relative;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.filter-options select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    min-width: 200px;
+}
+
+/* Grid de Cursos */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Card do Curso (similar ao de userPage.css) */
+.course-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.course-card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.course-card-content {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.course-card-content h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.course-card-content p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.course-card-footer {
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.8em;
+    color: #888;
+}

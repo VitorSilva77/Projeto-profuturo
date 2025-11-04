@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; img-src 'self' https://storage.googleapis.com;">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="stylesheet" href="../assets/css/media.css">
-    <link rel="stylesheet" href="../assets/css/darkmode.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-    <link rel="stylesheet" href="../assets/css/perfil.css">
-    <title>Perfil Page</title>
+    <link rel="stylesheet" href="../assets/css/darkmode.css">
+    <link rel="stylesheet" href="../assets/css/cursos.css">
+    <title>Cursos - PróFuturo</title>
 </head>
 <body>
     <div class="container">
       
+      <!--Menu lateral-->
       <aside class="sidebar">
         <div class="logo-section">
             <img src="../assets/images/teste1.png" alt="Logo PróFuturo" class="logo-image">
@@ -25,7 +25,7 @@
         <div class="itens">
             <a href="./userPage.html" class="item"><i class="fa-solid fa-house"></i> Início</a>
             <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
-            <a href="./cursos.html" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
+            <a href="./cursos.html" class="item active"><i class="fa-solid fa-book"></i> Cursos</a>
             <a href="./relatorios.html" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
             <div class="item theme-switcher">
               <i class="fa-solid fa-moon"></i>
@@ -42,31 +42,39 @@
         </div>
       </aside>
 
+      <!--Conteúdo Principal-->
+      <main class="main">
+        <header class="header">
+          <h2>Catálogo de Cursos</h2>
+        </header>
 
-        <main class="main">
-            <header class="header">
-            <h2>Perfil</h2>
-            </header>
-    
-            <!-- Seção de perfil -->
-            <section class="profile">
-    
-            <h2 class="section-title">Meu Perfil</h2>
-            
-            <form>
-                <input type="text" placeholder="Nome Completo">
-                <input type="email" placeholder="Email">
-                <input type="mumber" placeholder="Funcional">
-                <input type="password" placeholder="Senha">
-                <Select>
-                <option value="" disabled selected>Tipo de Usuário</option>
-                <option value="admin">Administrador</option>
-                <option value="instrutor">RH</option>
-                <option value="aluno">Instrutor</option>
-                </Select>
-                <button type="submit">Salvar</button>
-            </form>
-            </section>
+        <!--Filtro e Busca-->
+        <section class="filters">
+          <div class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Buscar por nome do curso...">
+          </div>
+          <div class="filter-options">
+            <select id="workloadFilter">
+              <option value="all">Toda Carga Horária</option>
+              <option value="0-20">Até 20 horas</option>
+              <option value="21-40">21 a 40 horas</option>
+              <option value="41-80">41 a 80 horas</option>
+              <option value="81+">Acima de 80 horas</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Lista de Cursos -->
+        <section class="course-list">
+          <div id="courses-container" class="courses-grid">
+            <!-- Cards dos cursos serão inseridos aqui -->
+          </div>
+        </section>
+      </main>
     </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/cursos.js"></script>
 </body>
 </html>

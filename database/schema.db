@@ -22,7 +22,6 @@ CREATE TABLE usuarios (
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
--- Índice para buscas rápidas por email
 CREATE INDEX idx_usuarios_email ON usuarios(email);
 
 CREATE TABLE cursos (
@@ -47,12 +46,11 @@ CREATE TABLE matriculas (
     curso_id INT NOT NULL,
     data_matricula DATE DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) DEFAULT 'cursando', -- 'cursando', 'concluido', 'cancelado'
-    nota_final DECIMAL(5, 2), -- Ex: 100.00 ou 9.75
+    nota_final DECIMAL(5, 2), 
     
     FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE,
     
-    -- Garante que um aluno não pode se matricular no mesmo curso duas vezes
     UNIQUE(aluno_id, curso_id) 
 );
 

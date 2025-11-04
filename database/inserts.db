@@ -1,7 +1,4 @@
--- 1. Seleciona o banco de dados correto (baseado no seu .env)
-
 -- 2. Insere as Roles (perfis de usuário)
--- Estes nomes DEVEVEM corresponder ao seu arquivo constants.js
 INSERT INTO roles (nome, descricao) VALUES
 ('TI', 'Administrador do Sistema'),
 ('RH', 'Recursos Humanos'),
@@ -10,22 +7,32 @@ INSERT INTO roles (nome, descricao) VALUES
 
 -- 3. Insere os Usuários de Teste
 -- SENHA DE TODOS: senha123
--- HASH BCRYPT (para 'senha123'): $2b$10$J/9d..iV.E.P.v.d.M.b.S.m.G.u.K.O.c.D.l.w.G.I.b.e.n.c.F.p.w.G
 INSERT INTO usuarios (funcional, nome, email, password_hash, role_id) VALUES
 ('11111', 'Admin TI', 'ti@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 1),
 ('22222', 'Recursos Humanos', 'rh@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 2),
 ('12121','Prof. Carlos', 'prof@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 3),
-('12345','Aluna Beatriz', 'aluno@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 4);
+('12345','Aluna Beatriz', 'aluno@profuturo.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', 4),
+('33333','Beatriz Costa', 'beatriz.costa@example.com', '$$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', '4'),
+('44444','Carlos Souza', 'carlos.souza@example.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', '4'),
+('21212','Daniela Lima', 'daniela.lima@example.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', '3'),
+('55555','Eduardo Rocha', 'eduardo.rocha@example.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', '4'),
+('66666','Fernanda Alves', 'fernanda.alves@example.com', '$2a$12$.4u8g2.H8uulQH9zlQqQcOfcUC2fu40KmVhdDQm94VYDG2//SWHQu', '4');
 
 -- 4. Insere Cursos de Teste
--- (Assume que o 'Prof. Carlos' tem o ID 3)
 INSERT INTO cursos (titulo, descricao, carga_horaria, professor_id, imagem_path) VALUES
-('Introdução ao Electron', 'Curso para construir apps desktop com JS.', 40, 3, 'aprenda-youtube.svg'),
-('Gestão de Projetos Ágeis', 'Curso sobre Scrum e Kanban.', 20, 3, 'auxiliar-administrativo.svg');
+('Introdução ao Electron', 'Curso para construir apps desktop com JS.', 40, 3, 'https://storage.googleapis.com/projeto_pro_futuro/aprenda-electron.svg'),
+('Gestão de Projetos Ágeis', 'Curso sobre Scrum e Kanban.', 20, 3, 'https://storage.googleapis.com/projeto_pro_futuro/gestao-projetos.svg'),
+('Ciência da Computação', 'Curso focado nos fundamentos da computação, algoritmos e estruturas de dados.', 40, 7, 'https://storage.googleapis.com/projeto_pro_futuro/ciencia-computacao.svg'),
+('Redes de Computadores', 'Curso sobre projeto, implementação e gerenciamento de redes de computadores.', 60, 7, 'https://storage.googleapis.com/projeto_pro_futuro/redes-computadores.svg'),
+('Segurança da Informação', 'Curso para formar profissionais capazes de proteger sistemas e dados contra ameaças cibernéticas.', 80, 7, 'https://storage.googleapis.com/projeto_pro_futuro/seguranca-informacao.svg');
+
 
 -- 5. Insere Matrículas de Teste
--- (Assume que a 'Aluna Beatriz' tem o ID 4 e os cursos são ID 1 e 2)
--- Esta seção é VITAL para testar os gráficos de relatórios.
 INSERT INTO matriculas (aluno_id, curso_id, status, nota_final) VALUES
 (4, 1, 'cursando', NULL),
-(4, 2, 'concluido', 8.5);
+(4, 2, 'concluido', 8.5),
+(5, 3, 'cursando', NULL),
+(6, 5, 'cursando', NULL),
+(8, 4, 'concluido', 8.0),
+(8, 1, 'concluido', 9.0),
+(9, 4, 'concluido', 7.0);

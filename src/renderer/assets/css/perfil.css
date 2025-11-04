@@ -1,0 +1,33 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+body {
+  background: #f5f6fa;
+  color: #333;
+  font-family: 'poppinsregular', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Área principal */
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.section-title{
+    margin-top: 40px;
+    color: black;
+}

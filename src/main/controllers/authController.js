@@ -21,7 +21,6 @@ async function handleLogout() {
   }
 }
 
-
 async function handleRestoreSession(event, user) {
   try {
     authService.setCurrentUser(user);

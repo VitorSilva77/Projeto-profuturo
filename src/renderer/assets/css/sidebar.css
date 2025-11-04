@@ -1,0 +1,97 @@
+
+.sidebar {
+  width: 220px;
+  background-color: rgb(34, 34, 34);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-section > img {
+    width: 70px;
+    height: auto;
+    margin: none;
+}
+
+.logo-section {
+    margin: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    text-align: center;
+}
+
+.itens {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.item a{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.item:hover {
+    background: rgb(255, 71, 20);
+}
+
+.item i {
+    width: 20px;
+    text-align: center;
+}
+
+
+.logout-button {
+    margin-top: auto;
+    color: white;
+    background:rgb(34, 34, 34);;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.logout-button i {
+    width: 20px;
+    text-align: center;
+}
+
+.logout-button:hover {
+    background: rgb(255, 71, 20);
+}
+
+.logo {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: rgb(255, 71, 20);
+}
+
+.btn-login {
+    color: rgb(255, 71, 20);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}

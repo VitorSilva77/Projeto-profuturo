@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; img-src 'self' https://storage.googleapis.com;">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/fonts.css">
     <link rel="stylesheet" href="../assets/css/media.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
     <link rel="stylesheet" href="../assets/css/userPage.css">
     <link rel="stylesheet" href="../assets/css/darkmode.css">
     <script src="../../../node_modules/chart.js/dist/chart.js"></script>
@@ -18,29 +19,29 @@
       
       <!-- Menu lateral -->
       <aside class="sidebar">
-          <div class="logo-section">
-              <img src="../assets/images/teste1.png" alt="Logo PróFuturo" class="logo-image">
-              <h2 class="logo">PróFuturo</h2>
-          </div>
-          
-          <div class="itens">
-              <a href="#" class="item"><i class="fa-solid fa-house"></i> Início</a>
-              <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
-              <a href="#" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
-              <a href="#" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
-              <div class="item theme-switcher">
-                <i class="fa-solid fa-moon"></i>
-                <span>Modo Escuro</span>
-                <label class="switch">
-                  <input type="checkbox" id="darkModeToggle">
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <button class="logout-button">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Sair</span>
-              </button>
-          </div>
+        <div class="logo-section">
+            <img src="../assets/images/teste1.png" alt="Logo PróFuturo" class="logo-image">
+            <h2 class="logo">PróFuturo</h2>
+        </div>
+        
+        <div class="itens">
+            <a href="#main" class="item"><i class="fa-solid fa-house"></i> Início</a>
+            <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
+            <a href="./cursos.html" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
+            <a href="./relatorios.html" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
+            <div class="item theme-switcher">
+              <i class="fa-solid fa-moon"></i>
+              <span>Dark Mode</span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <button class="logout-button">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Sair</span>
+            </button>
+        </div>
       </aside>
 
       
