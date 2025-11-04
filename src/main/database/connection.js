@@ -9,14 +9,6 @@ function init() {
     return; 
   }
 
-  console.log('--- VARIÁVEIS DE AMBIENTE PARA O BANCO ---');
-  console.log('DB_HOST:', process.env.DB_HOST);
-  console.log('DB_PORT:', process.env.DB_PORT);
-  console.log('DB_USER:', process.env.DB_USER);
-  console.log('DB_PASSWORD:', process.env.DB_PASSWORD); 
-  console.log('DB_NAME:', process.env.DB_NAME);
-  console.log('-----------------------------------------');
-  
   console.log('Inicializando conexão com o banco de dados...');
 
   const caPath = path.join(__dirname, 'ssl', 'server-ca.pem');
@@ -29,7 +21,7 @@ function init() {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      ssl: { ca: fs.readFileSync(caPath) },
+      //ssl: { ca: fs.readFileSync(caPath) }, // descomentar se for executar em nuvem com SSL
     },
 
     pool: { min: 2, max: 10 }

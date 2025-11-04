@@ -14,6 +14,44 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div class="container">
+
+        <!-- Menu lateral -->
+      <aside class="sidebar">
+        <div class="logo-section">
+            <img src="../assets/images/teste1.png" alt="Logo PróFuturo" class="logo-image">
+            <h2 class="logo">PróFuturo</h2>
+        </div>
+        
+        <div class="itens">
+            <a href="./userPage.html" class="item"><i class="fa-solid fa-house"></i> Início</a>
+            <a href="./perfil.html" class="item"><i class="fa-solid fa-user"></i> Perfil</a>
+            <a href="./cursos.html" class="item"><i class="fa-solid fa-book"></i> Cursos</a>
+            <a href=".container" class="item"><i class="fa-solid fa-chart-bar"></i> Relatórios</a>
+            <div class="item theme-switcher">
+              <i class="fa-solid fa-moon"></i>
+              <span>Dark Mode</span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <button class="logout-button">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Sair</span>
+            </button>
+        </div>
+      </aside>
+
+      <div class="report-option">
+        <h3>Relatório de Média dos Cursos</h3>
+        <p>Gera uma planilha com a média das notas finais dos alunos concluintes de cada curso.</p>
+        <button id="btn-generate-course-average" class="btn">Gerar Relatório</button>
+      </div>
+    </div>
     
 </body>
+<script src="../js/darkmode.js"></script>
+<script src="../js/relatorios.js"></script>
 </html>

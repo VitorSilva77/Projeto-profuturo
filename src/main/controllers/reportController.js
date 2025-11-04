@@ -29,8 +29,13 @@ async function handleGetGradeDistribution(event, courseId) {
   }
 }
 
+const handleGenerateCourseAveragesReport = async () => {
+    return await reportService.generateCourseAveragesReport();
+};
+
 module.exports = { 
   handleGetCoursePerformance,
   handleGetEnrollmentStatus,
-  handleGetGradeDistribution 
+  handleGetGradeDistribution,
+  handleGenerateCourseAveragesReport
 };

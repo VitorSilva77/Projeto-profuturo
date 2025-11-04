@@ -59,8 +59,34 @@ async function getGradeDistribution(courseId = null) {
   return await query;
 }
 
+const getCourseAverages = async () => {
+    const query = `
+        WITH medias_por_curso AS (
+            SELECT 
+                curso_id,
+                AVG(nota_final) AS media_curso
+            FROM pro_futuro_schema.matriculas
+            WHERE status = 'concluido'
+            GROUP BY curso_id
+        )
+        SELECT 
+            c.titulo,
+            c.descricao,
+            c.carga_horaria,
+            c.professor_id,
+            m.media_curso
+        FROM pro_futuro_schema.cursos AS c
+        INNER JOIN medias_por_curso AS m 
+        ON c.id = m.curso_id
+        ORDER BY c.titulo;
+    `;
+    const result = await pool.query(query);
+    return result.rows;
+};
+
 module.exports = {
   getCoursePerformance,
   getEnrollmentStatus,
-  getGradeDistribution 
+  getGradeDistribution,
+  getCourseAverages
 };

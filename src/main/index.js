@@ -29,6 +29,7 @@ function registerIpcHandlers() {
   ipcMain.handle('reports:course-performance', reportController.handleGetCoursePerformance);
   ipcMain.handle('reports:enrollment-status', reportController.handleGetEnrollmentStatus);
   ipcMain.handle('reports:grade-distribution', reportController.handleGetGradeDistribution);
+  ipcMain.handle('generate-course-averages-report', reportController.handleGenerateCourseAveragesReport);
 }
 
 function createWindow() {
